@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bun run build:*)",
+      "Bash(bun run lint:*)",
+      "Bash(bun run test:*)",
+      "Bash(bun run typecheck:*)",
+      "Bash(bun run format:*)",
+      "Bash(find:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh pr checks:*)",
+      "Bash(gh pr comment:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh pr list:*)",
+      "Edit(/src/**)",
+      "Edit(/tests/**)",
+      "Edit(/docs/**)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run format || true"
+          }
+        ]
+      }
+    ]
+  },
+  "mcpServers": {
+    "slack": {
+      "type": "http",
+      "url": "https://slack.mcp.anthropic.com/mcp"
+    }
+  }
+}
