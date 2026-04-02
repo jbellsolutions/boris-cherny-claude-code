@@ -1,0 +1,302 @@
+{
+  "title": "Learn Claude Code From Its Creator",
+  "kicker": "Boris Cherny's Masterclass",
+  "headline": "The exact setup and workflows from the person who built Claude Code.",
+  "subheadline": "Learn the practices, configurations, and patterns that Boris Cherny uses every day — parallel sessions, verification loops, custom agents, worktrees, hooks, and the compounding CLAUDE.md flywheel — packaged as a full training with a drop-in setup.",
+  "audience": [
+    "Engineers who want to 2-3x their output with Claude Code",
+    "Team leads who want to roll out Claude Code across their org",
+    "Operators who want to automate workflows with agents and MCP",
+    "Anyone serious about learning Claude Code from the source"
+  ],
+  "outcomes": [
+    "Run 10-15 parallel Claude sessions like Boris does at Anthropic",
+    "Set up verification feedback loops that 2-3x the quality of every output",
+    "Build custom agents, commands, and hooks that compound over time",
+    "Use git worktrees for fully isolated parallel development",
+    "Integrate Slack, BigQuery, Sentry, and other tools via MCP for zero context switching",
+    "Deploy a drop-in setup with agents, commands, permissions, and CLAUDE.md into any project"
+  ],
+  "stats": {
+    "lessonCount": 17,
+    "runtime": "72+ tips covered",
+    "format": "Full course with drop-in setup"
+  },
+  "login": {
+    "title": "Member Login",
+    "subheadline": "Enter any email and password to access the full course and setup library."
+  },
+  "modules": [
+    {
+      "id": "m01-core-philosophy",
+      "orderLabel": "Module 1",
+      "title": "Core Philosophy",
+      "headline": "The three rules that make everything else work.",
+      "subheadline": "Boris's approach comes down to three things: always give Claude a verification feedback loop, plan before you execute, and never accept the first answer. This module explains why each one matters and how they compound.",
+      "tags": ["Core principle", "Mindset shift", "Foundation"],
+      "focus": [
+        "Verification is the #1 lever — feedback loops 2-3x quality",
+        "Plan Mode leads to 1-shot implementations, saving hours of iteration",
+        "Pushing Claude to do better produces dramatically better results",
+        "Opus with thinking mode requires less steering and produces faster end-to-end results",
+        "The compounding CLAUDE.md flywheel: every correction prevents all future mistakes"
+      ]
+    },
+    {
+      "id": "m02-plan-mode",
+      "orderLabel": "Module 2",
+      "title": "Plan Mode",
+      "headline": "How to get 1-shot implementations instead of iteration hell.",
+      "subheadline": "Boris starts every complex session in Plan Mode. This module covers the full workflow: enter Plan Mode, iterate on the plan, switch to auto-accept, and how to recover when things go sideways.",
+      "tags": ["Core workflow", "Productivity", "Foundation"],
+      "focus": [
+        "Enter Plan Mode with Shift+Tab twice before starting complex tasks",
+        "Let Claude ask clarifying questions and answer them thoroughly",
+        "Review and iterate on the plan before switching to auto-accept",
+        "Recovery pattern: stop, re-enter Plan Mode, analyze, re-plan, resume",
+        "Two-Claude pattern: one writes the plan, another reviews it as staff engineer",
+        "Name sessions for tracking: claude --name 'auth-refactor'"
+      ]
+    },
+    {
+      "id": "m03-verification",
+      "orderLabel": "Module 3",
+      "title": "Verification — The #1 Principle",
+      "headline": "Give Claude a feedback loop and watch quality 2-3x.",
+      "subheadline": "The single biggest lever for output quality. This module covers every type of verification: test suites, type checking, browser testing, CLI output, and diff verification — plus how to build verification into CLAUDE.md, agents, hooks, and prompts.",
+      "tags": ["Core principle", "Quality", "Must-learn"],
+      "focus": [
+        "Test suites are the strongest verification — bun run test after every change",
+        "Type checking catches errors fast — bun run typecheck",
+        "Chrome extension lets Claude test frontend UI visually and iterate",
+        "Diff verification: 'Prove to me this works — diff behavior on main vs this branch'",
+        "Build verification into CLAUDE.md, custom agents, PostToolUse hooks, and prompts",
+        "The anti-pattern: letting Claude make changes without any verification"
+      ]
+    },
+    {
+      "id": "m04-claude-md",
+      "orderLabel": "Module 4",
+      "title": "CLAUDE.md — The Compounding Flywheel",
+      "headline": "Every correction prevents all future occurrences of that mistake.",
+      "subheadline": "Boris maintains a single CLAUDE.md checked into git. The whole team contributes. Every time Claude makes a mistake, they add a correction. Over time, the mistake rate drops measurably. This is compounding engineering.",
+      "tags": ["Core practice", "Team scale", "Must-learn"],
+      "focus": [
+        "Single CLAUDE.md checked into git — whole team contributes multiple times weekly",
+        "The correction pattern: Claude makes mistake → add to CLAUDE.md → never happens again",
+        "GitHub Action with @.claude tags auto-updates CLAUDE.md from PR comments",
+        "Notes directory pattern: per-task/project notes that CLAUDE.md points to",
+        "Scoping: root-level, subdirectory, and global CLAUDE.md files",
+        "What to include: build commands, conventions, corrections. What to skip: obvious advice"
+      ]
+    },
+    {
+      "id": "m05-parallel-sessions",
+      "orderLabel": "Module 5",
+      "title": "Parallel Sessions",
+      "headline": "Running 10-15 Claudes simultaneously is the biggest productivity unlock.",
+      "subheadline": "Boris runs 5 terminal sessions numbered 1-5, plus 5-10 web sessions, plus phone sessions. System notifications, color-coded tabs, named sessions. This module teaches the dispatch mindset.",
+      "tags": ["Workflow", "Productivity", "Key technique"],
+      "focus": [
+        "5 terminal sessions in iTerm2 with system notifications for completion",
+        "5-10 web sessions on claude.ai for longer-running parallel work",
+        "Teleport between devices: claude --teleport moves sessions local↔web↔phone",
+        "Session forking: /branch or claude --resume <id> --fork-session",
+        "The dispatch mindset: assign task → move to next → come back when pinged",
+        "Shell aliases for quick worktree navigation: za, zb, zc"
+      ]
+    },
+    {
+      "id": "m06-git-worktrees",
+      "orderLabel": "Module 6",
+      "title": "Git Worktrees",
+      "headline": "Parallel isolated development — no clobbering, no conflicts.",
+      "subheadline": "When running 5+ sessions, they all modify files. Worktrees give each session its own checkout with its own branch. This module covers manual setup, the -w flag, Desktop app checkbox, batch operations, and non-Git VCS support.",
+      "tags": ["Workflow", "Parallel dev", "Key technique"],
+      "focus": [
+        "claude -w my-feature creates a worktree and starts a session automatically",
+        "Desktop app: check the 'worktree' checkbox before starting",
+        "Each worktree is a full checkout on its own branch — changes don't affect others",
+        "Launch 10 parallel agents with worktree isolation for batch operations",
+        "/batch command fans out work to dozens of worktree agents for large migrations",
+        "WorktreeCreate/WorktreeRemove hooks for Mercurial, Perforce, and SVN"
+      ]
+    },
+    {
+      "id": "m07-custom-agents",
+      "orderLabel": "Module 7",
+      "title": "Custom Agents",
+      "headline": "Build a team of specialized agents in .claude/agents/.",
+      "subheadline": "Agents are Claude instances with custom system prompts, tool sets, and permissions. Drop a .md file in .claude/agents/ and launch it with --agent. This module covers Boris's agent team and how to build your own.",
+      "tags": ["Advanced", "Automation", "Team scale"],
+      "focus": [
+        "code-reviewer: spawns 5 parallel subagents checking logic, security, performance, style, edge cases",
+        "build-validator: runs typecheck, lint, tests, build in sequence and reports PASS/FAIL",
+        "code-simplifier: post-implementation cleanup — dedup, dead code, CLAUDE.md compliance",
+        "worktree-worker: isolated worker with 'isolation: worktree' in frontmatter",
+        "Agent frontmatter: name, model, description, isolation, permission mode",
+        "Subagent pattern: 5 agents explore → 5 more challenge the findings"
+      ]
+    },
+    {
+      "id": "m08-custom-commands",
+      "orderLabel": "Module 8",
+      "title": "Custom Commands",
+      "headline": "Slash commands that automate multi-step workflows.",
+      "subheadline": "Drop a .md file in .claude/commands/ and type /command-name. This module covers Boris's commands: /commit-push-pr, /babysit, /feature-dev, /techdebt, and how to create your own with arguments.",
+      "tags": ["Advanced", "Automation", "Workflow"],
+      "focus": [
+        "/commit-push-pr: one command to commit, push, and open a PR",
+        "/babysit: auto-address code review comments, auto-rebase, shepherd to merge",
+        "/feature-dev: Boris's planning-first workflow — spec → plan → review → implement → verify → simplify",
+        "/techdebt: find duplicated code and consolidate clear wins",
+        "Commands accept $ARGUMENTS: /fix-issue 123 reads the issue and implements a fix",
+        "/btw for side queries without interrupting current work"
+      ]
+    },
+    {
+      "id": "m09-hooks",
+      "orderLabel": "Module 9",
+      "title": "Hooks",
+      "headline": "Deterministic logic that always runs — unlike prompts, which are suggestions.",
+      "subheadline": "Hooks are shell commands that fire on events: SessionStart, PreToolUse, PostToolUse, PermissionRequest, Stop, PostCompact. This module covers Boris's auto-format hook and the full hook event system.",
+      "tags": ["Advanced", "Automation", "Configuration"],
+      "focus": [
+        "PostToolUse auto-format: bun run format after every Write|Edit — deterministic, not a suggestion",
+        "SessionStart: dynamically load context when Claude launches",
+        "Stop hook: poke Claude to keep going when it reaches turn end",
+        "PostCompact: re-inject critical instructions lost during context compression",
+        "PermissionRequest: route permission prompts to Slack/WhatsApp for remote approval",
+        "WorktreeCreate/WorktreeRemove: custom worktree logic for non-Git VCS"
+      ]
+    },
+    {
+      "id": "m10-permissions-security",
+      "orderLabel": "Module 10",
+      "title": "Permissions & Security",
+      "headline": "Pre-allow safe commands instead of skipping permissions entirely.",
+      "subheadline": "Boris pre-allows specific commands like bun run test:* and Edit(/src/**) via /permissions. This module covers the pre-allow pattern, Auto Mode safety classifiers, sandboxing, and when it's appropriate to skip permissions.",
+      "tags": ["Advanced", "Security", "Configuration"],
+      "focus": [
+        "Pre-allow pattern: Bash(bun run test:*), Edit(/src/**) — safe commands skip prompts",
+        "Wildcard syntax (*) matches any suffix — Bash(gh pr *) covers all gh pr subcommands",
+        "Auto Mode: built-in safety classifiers auto-approve safe ops, flag risky ones",
+        "Sandboxing: file and network isolation for untrusted or long-running tasks",
+        "Sandbox + dontAsk: safe auto-approve because destructive ops blocked at OS level",
+        "Enterprise policies: codebase-wide, personal, and org-wide settings layers"
+      ]
+    },
+    {
+      "id": "m11-mcp-integrations",
+      "orderLabel": "Module 11",
+      "title": "MCP Integrations",
+      "headline": "Zero context switching — Slack, BigQuery, Sentry, and more come to you.",
+      "subheadline": "MCP servers give Claude access to external tools. Boris uses Slack MCP to paste bug threads and say 'fix', BigQuery for natural language analytics, and Sentry for error logs. This module covers setup and the zero-context-switching pattern.",
+      "tags": ["Advanced", "Integration", "Productivity"],
+      "focus": [
+        "Slack MCP: paste bug thread → 'fix'. Daily summaries. Auto PRs from feedback",
+        "BigQuery: 'I haven't written a line of SQL in 6+ months' — natural language queries",
+        "Sentry: grab production error logs and stack traces without leaving Claude Code",
+        "GitHub Action: @.claude PR integration auto-updates CLAUDE.md",
+        "iMessage plugin: text Claude from any Apple device as a Messages contact",
+        "MCP config in settings.json: { 'slack': { 'type': 'http', 'url': '...' } }"
+      ]
+    },
+    {
+      "id": "m12-prompting-techniques",
+      "orderLabel": "Module 12",
+      "title": "Prompting Techniques",
+      "headline": "Challenge Claude. Demand proof. Write detailed specs. Use voice.",
+      "subheadline": "Boris treats Claude like a talented junior engineer — capable of great work, but you need to set the bar high. This module covers his prompting patterns, effort levels, voice input (3x faster than typing), and output styles.",
+      "tags": ["Workflow", "Productivity", "Prompting"],
+      "focus": [
+        "Challenge: 'Grill me on these changes and don't make a PR until I pass your test'",
+        "Demand proof: 'Prove this works by diffing behavior on main vs this branch'",
+        "Iterative: 'Knowing everything you know now, scrap this and implement the elegant solution'",
+        "Voice input is 3x faster than typing — prompts naturally become more detailed",
+        "Effort levels: /effort low for quick lookups, /effort max for unlimited reasoning",
+        "Output styles: Explanatory, Learning, Custom — set via /config"
+      ]
+    },
+    {
+      "id": "m13-code-review",
+      "orderLabel": "Module 13",
+      "title": "Code Review Automation",
+      "headline": "Multi-agent review that caught enough bugs to 2x code output per engineer at Anthropic.",
+      "subheadline": "Boris's code review dispatches 5 subagents in parallel — logic, security, performance, style, edge cases — then 5 more challenge the findings. Only real bugs with file:line references survive. This module covers the full pattern.",
+      "tags": ["Advanced", "Quality", "Team scale"],
+      "focus": [
+        "First pass: 5 subagents check logic errors, security, performance, style, edge cases",
+        "Second pass: 5 subagents challenge every finding — is this actually a bug?",
+        "GitHub Action review: runs on every PR, posts inline comments on real bugs",
+        "The 'Grill Me' pattern: make Claude test your understanding before allowing a PR",
+        "Two-Claude review: one implements, one reviews independently in a separate session",
+        "Result: code output per engineer up 200% at Anthropic"
+      ]
+    },
+    {
+      "id": "m14-long-running-tasks",
+      "orderLabel": "Module 14",
+      "title": "Long-Running & Scheduled Tasks",
+      "headline": "Replace cron jobs with Claude-powered automation.",
+      "subheadline": "/loop runs local recurring tasks up to 3 days. /schedule runs cloud jobs that survive laptop closure. This module covers both, plus Stop hooks, sandboxed auto-approve, and cloud environment setup scripts.",
+      "tags": ["Advanced", "Automation", "DevOps"],
+      "focus": [
+        "/loop 5m /babysit: auto-address review comments every 5 minutes",
+        "/loop 30m /slack-feedback: auto-create PRs from Slack feedback",
+        "/schedule daily: cloud-based jobs that run even when your laptop is closed",
+        "Stop hook: deterministic check that pokes Claude to continue if not done",
+        "Sandboxed auto-approve: --permission-mode=dontAsk in isolated environments",
+        "Cloud setup scripts: install deps, configure settings before Claude launches"
+      ]
+    },
+    {
+      "id": "m15-mobile-cross-device",
+      "orderLabel": "Module 15",
+      "title": "Mobile & Cross-Device",
+      "headline": "'When I'm not coding, I'm dispatching.'",
+      "subheadline": "Claude Code on iOS/Android. Teleport sessions between terminal, web, and phone. Remote control from anywhere. This module covers Boris's cross-device workflow and the dispatch mindset.",
+      "tags": ["Workflow", "Mobile", "Productivity"],
+      "focus": [
+        "Claude Code mobile app: full sessions from your phone (iOS and Android)",
+        "Teleport: start in terminal → --teleport to web → continue on phone → teleport back",
+        "Remote control: start and manage local sessions from any device",
+        "Cowork dispatch: delegate Slack, email, file management from mobile",
+        "iMessage integration: text Claude from any Apple device",
+        "Session naming and color-coding for easy identification on mobile"
+      ]
+    },
+    {
+      "id": "m16-team-patterns",
+      "orderLabel": "Module 16",
+      "title": "Team Patterns",
+      "headline": "Check the setup into git and every new team member gets the full system on clone.",
+      "subheadline": "Shared CLAUDE.md, shared settings.json, shared agents and commands — all checked into git. This module covers team-scale practices, onboarding, the plugin marketplace concept, and the Slack context dump pattern.",
+      "tags": ["Team scale", "Org", "Leadership"],
+      "focus": [
+        "Shared CLAUDE.md: whole team contributes corrections, reviewed like code",
+        "Shared settings.json: permissions, hooks, MCP servers — no per-person setup",
+        "Shared .claude/agents/ and .claude/commands/: everyone gets the full toolset",
+        "Onboarding: clone repo → run install.sh → everything works",
+        "Plugin marketplace: teams publish best agents/commands for cross-org adoption",
+        "Slack sync: 7 days of Slack, GDrive, Asana, GitHub in one context dump"
+      ]
+    },
+    {
+      "id": "m17-terminal-environment",
+      "orderLabel": "Module 17",
+      "title": "Terminal & Environment",
+      "headline": "Ghostty, statusline, vim mode, voice input, and custom spinners.",
+      "subheadline": "The terminal setup that makes everything smooth. Ghostty for rendering, /statusline for context tracking, /keybindings for customization, voice input for 3x faster prompting, and output styles to match your workflow.",
+      "tags": ["Setup", "Terminal", "Quality of life"],
+      "focus": [
+        "Ghostty terminal: synchronized rendering, 24-bit color, proper Unicode",
+        "/statusline: model, directory, git branch, context usage, cost, elapsed time",
+        "/keybindings: remap any key, settings live-reload immediately",
+        "/voice: hold spacebar to dictate — 3x faster, naturally more detailed prompts",
+        "Output styles: Explanatory, Learning, Custom — match Claude's voice to your workflow",
+        "/terminal-setup: fix Shift+Enter in IDE terminals, Warp, Alacritty"
+      ]
+    }
+  ]
+}

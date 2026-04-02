@@ -1,498 +1,241 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boris Cherny's Claude Code — Course + Setup</title>
-    <style>
-        :root {
-            --bg: #0d1117;
-            --surface: #161b22;
-            --border: #30363d;
-            --text: #e6edf3;
-            --text-muted: #8b949e;
-            --accent: #58a6ff;
-            --accent-hover: #79c0ff;
-            --green: #3fb950;
-            --orange: #d29922;
-            --purple: #bc8cff;
-            --red: #f85149;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-        }
-        a { color: var(--accent); text-decoration: none; }
-        a:hover { color: var(--accent-hover); text-decoration: underline; }
-
-        /* Hero */
-        .hero {
-            text-align: center;
-            padding: 80px 20px 60px;
-            background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
-            border-bottom: 1px solid var(--border);
-        }
-        .hero h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, var(--accent), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero .subtitle {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 32px;
-        }
-        .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.2s;
-            border: 1px solid transparent;
-        }
-        .btn-primary {
-            background: var(--accent);
-            color: #0d1117;
-        }
-        .btn-primary:hover { background: var(--accent-hover); text-decoration: none; }
-        .btn-secondary {
-            background: transparent;
-            color: var(--text);
-            border-color: var(--border);
-        }
-        .btn-secondary:hover { border-color: var(--text-muted); text-decoration: none; }
-
-        /* Stats */
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 48px;
-            padding: 40px 20px;
-            flex-wrap: wrap;
-        }
-        .stat { text-align: center; }
-        .stat-value { font-size: 2rem; font-weight: 800; color: var(--green); }
-        .stat-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
-
-        /* Container */
-        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
-
-        /* Sections */
-        section { padding: 60px 0; }
-        section + section { border-top: 1px solid var(--border); }
-        .section-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .section-subtitle {
-            color: var(--text-muted);
-            margin-bottom: 32px;
-            font-size: 1.05rem;
-        }
-
-        /* Principles */
-        .principles {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .principle {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-        }
-        .principle-num {
-            display: inline-block;
-            background: var(--accent);
-            color: #0d1117;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 28px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-        .principle h3 { font-size: 1.1rem; margin-bottom: 8px; }
-        .principle p { color: var(--text-muted); font-size: 0.95rem; }
-
-        /* Course Modules */
-        .modules { display: flex; flex-direction: column; gap: 8px; }
-        .module {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 16px 20px;
-            transition: border-color 0.2s;
-        }
-        .module:hover { border-color: var(--accent); }
-        .module-num {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            min-width: 28px;
-        }
-        .module-title { font-weight: 600; flex: 1; }
-        .module-tag {
-            font-size: 0.75rem;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-        .tag-core { background: rgba(88,166,255,0.15); color: var(--accent); }
-        .tag-workflow { background: rgba(63,185,80,0.15); color: var(--green); }
-        .tag-advanced { background: rgba(188,140,255,0.15); color: var(--purple); }
-        .tag-team { background: rgba(210,153,34,0.15); color: var(--orange); }
-
-        /* Setup */
-        .setup-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 16px;
-        }
-        .setup-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-        }
-        .setup-card h3 { font-size: 1rem; margin-bottom: 8px; }
-        .setup-card ul {
-            list-style: none;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-        .setup-card li { padding: 3px 0; }
-        .setup-card li::before {
-            content: ">";
-            color: var(--green);
-            font-weight: 700;
-            margin-right: 8px;
-        }
-
-        /* Code block */
-        .code-block {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 20px;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 0.9rem;
-            overflow-x: auto;
-            margin-top: 24px;
-            color: var(--text-muted);
-        }
-        .code-block .cmd { color: var(--green); }
-        .code-block .comment { color: #484f58; }
-
-        /* Quote */
-        .quote {
-            border-left: 3px solid var(--accent);
-            padding: 20px 24px;
-            margin: 32px 0;
-            background: var(--surface);
-            border-radius: 0 8px 8px 0;
-        }
-        .quote p { font-style: italic; font-size: 1.1rem; margin-bottom: 8px; }
-        .quote cite { color: var(--text-muted); font-size: 0.9rem; }
-
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 40px 20px;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-        footer a { color: var(--text-muted); }
-        footer a:hover { color: var(--text); }
-        .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
-
-        /* Responsive */
-        @media (max-width: 640px) {
-            .hero h1 { font-size: 2rem; }
-            .stats { gap: 24px; }
-            .stat-value { font-size: 1.5rem; }
-        }
-    </style>
-</head>
-<body>
-
-<div class="hero">
-    <h1>Boris Cherny's Claude Code</h1>
-    <p class="subtitle">The exact setup, workflows, and best practices from the creator of Claude Code — packaged as a course and a drop-in configuration.</p>
-    <div class="hero-buttons">
-        <a href="https://github.com/jbellsolutions/boris-cherny-claude-code" class="btn btn-primary">View on GitHub</a>
-        <a href="#course" class="btn btn-secondary">Browse Course</a>
-        <a href="#setup" class="btn btn-secondary">Get the Setup</a>
-    </div>
-</div>
-
-<div class="stats">
-    <div class="stat">
-        <div class="stat-value">17</div>
-        <div class="stat-label">Course Modules</div>
-    </div>
-    <div class="stat">
-        <div class="stat-value">5</div>
-        <div class="stat-label">Custom Agents</div>
-    </div>
-    <div class="stat">
-        <div class="stat-value">4</div>
-        <div class="stat-label">Slash Commands</div>
-    </div>
-    <div class="stat">
-        <div class="stat-value">72+</div>
-        <div class="stat-label">Tips Covered</div>
-    </div>
-</div>
-
-<div class="container">
-
-    <section>
-        <div class="quote">
-            <p>"Give Claude a way to verify its work. If Claude has that feedback loop, it will 2-3x the quality of the final result."</p>
-            <cite>— Boris Cherny, creator of Claude Code</cite>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learn Claude Code From Its Creator</title>
+    <meta
+      name="description"
+      content="The exact setup, workflows, and best practices from Boris Cherny, the creator of Claude Code — packaged as a full course with a drop-in setup."
+    />
+    <meta property="og:title" content="Learn Claude Code From Its Creator" />
+    <meta
+      property="og:description"
+      content="17 modules covering Boris Cherny's personal Claude Code practices — parallel sessions, verification loops, custom agents, worktrees, hooks, and the compounding CLAUDE.md flywheel."
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand-lockup">
+          <span class="brand-mark"></span>
+          <div>
+            <p class="eyebrow">Masterclass</p>
+            <p class="brand-name">Boris Cherny's Claude Code</p>
+          </div>
         </div>
+        <nav class="nav">
+          <a href="#benefits">Benefits</a>
+          <a href="#curriculum">Curriculum</a>
+          <a href="#setup">Setup</a>
+          <button class="nav-button hidden" id="logout-button" type="button">Log Out</button>
+        </nav>
+      </header>
 
-        <h2 class="section-title">Core Principles</h2>
-        <p class="section-subtitle">The three rules that make everything else work.</p>
+      <main>
+        <!-- ===== AUTH / LANDING VIEW ===== -->
+        <section class="auth-shell reveal" id="auth-view">
+          <div class="auth-copy">
+            <p class="eyebrow" id="hero-kicker">Boris Cherny's Masterclass</p>
+            <h1 id="hero-title">Learn Claude Code From Its Creator</h1>
+            <p class="hero-headline" id="hero-headline"></p>
+            <p class="hero-subheadline" id="hero-subheadline"></p>
+            <div class="stat-ribbon" id="stat-ribbon"></div>
 
-        <div class="principles">
-            <div class="principle">
-                <div class="principle-num">1</div>
-                <h3>Verification Is Everything</h3>
-                <p>Every workflow, agent, and command is built around giving Claude a feedback loop — tests, type checks, browser testing, CLI output. This 2-3x the quality of results.</p>
+            <div class="marketing-grid" id="benefits">
+              <article class="marketing-card">
+                <p class="card-label">What This Is</p>
+                <h2>A course built from the creator's own practices.</h2>
+                <p>
+                  Not generic AI tips. This is the exact setup, workflows, and best practices
+                  that Boris Cherny — who built Claude Code at Anthropic — uses every day.
+                  Packaged as a 17-module course with a drop-in configuration.
+                </p>
+              </article>
+              <article class="marketing-card">
+                <p class="card-label">Why It Works</p>
+                <h2>Verification loops that 2-3x the quality of every output.</h2>
+                <p>
+                  Boris's #1 principle: give Claude a way to verify its work. Combined with
+                  Plan Mode, custom agents, and the compounding CLAUDE.md flywheel, these practices
+                  dramatically improve output quality and reduce iteration cycles.
+                </p>
+              </article>
             </div>
-            <div class="principle">
-                <div class="principle-num">2</div>
-                <h3>Plan First, Execute Second</h3>
-                <p>Start every complex session in Plan Mode. A good plan leads to 1-shot implementations. When things go sideways, re-enter Plan Mode instead of pushing forward.</p>
+
+            <section class="audience-panel">
+              <div>
+                <p class="section-kicker">Who It Is For</p>
+                <div class="pill-list" id="audience-list"></div>
+              </div>
+              <div>
+                <p class="section-kicker">What You Will Be Able To Do</p>
+                <div class="check-list" id="outcome-list"></div>
+              </div>
+            </section>
+          </div>
+
+          <aside class="login-card">
+            <div class="login-hero-block">
+              <div class="hero-icon">&#x2318;</div>
+              <h3>Learn From the Source</h3>
+              <p>17 modules &middot; 72+ tips &middot; Drop-in setup</p>
             </div>
-            <div class="principle">
-                <div class="principle-num">3</div>
-                <h3>Don't Accept the First Answer</h3>
-                <p>Push Claude to do better. "Scrap this and implement the elegant solution." Challenge it. Demand proof. Claude can almost always do better when you raise the bar.</p>
+            <div class="login-copy">
+              <p class="section-kicker" id="login-title">Member Login</p>
+              <h2>Enter the course portal.</h2>
+              <p id="login-subheadline">
+                Use any email and password to access the full course library.
+              </p>
             </div>
-        </div>
-    </section>
+            <form id="login-form" class="login-form">
+              <label class="field">
+                <span>Email</span>
+                <input id="email" type="email" name="email" placeholder="you@company.com" required />
+              </label>
+              <label class="field">
+                <span>Password</span>
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  required
+                />
+              </label>
+              <label class="remember-row">
+                <input type="checkbox" checked />
+                <span>Remember this device</span>
+              </label>
+              <button class="button button-primary button-full" type="submit">Enter Course</button>
+              <p class="form-note" id="login-feedback">
+                Use any valid email and password to enter the course portal.
+              </p>
+            </form>
+          </aside>
+        </section>
 
-    <section id="course">
-        <h2 class="section-title">The Course</h2>
-        <p class="section-subtitle">17 modules covering everything Boris does — from philosophy to team-scale deployment.</p>
+        <!-- ===== PORTAL VIEW (after login) ===== -->
+        <section class="portal hidden" id="portal-view">
+          <div class="portal-hero reveal">
+            <div>
+              <p class="eyebrow">Course Dashboard</p>
+              <h2 id="portal-title">Welcome to the course.</h2>
+              <p class="portal-copy">
+                Work through the modules in order. Each one covers a specific aspect of
+                Boris Cherny's Claude Code setup. Use the checklist under each lesson
+                to track what you have learned.
+              </p>
+              <p class="portal-copy" id="portal-progress" style="font-weight: 800; margin-top: 12px;"></p>
+            </div>
+            <div class="portal-card">
+              <p class="section-kicker">Progress Path</p>
+              <p class="portal-stat">Beginner &rarr; Boris-Level</p>
+              <p class="portal-small">
+                From first install to running 10-15 parallel sessions with custom agents,
+                worktrees, hooks, and MCP integrations.
+              </p>
+            </div>
+          </div>
 
-        <div class="modules">
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/00-introduction.md" class="module">
-                <span class="module-num">00</span>
-                <span class="module-title">Introduction</span>
-                <span class="module-tag tag-core">Core</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/01-core-philosophy.md" class="module">
-                <span class="module-num">01</span>
-                <span class="module-title">Core Philosophy — Verification, Planning, Pushing for Better</span>
-                <span class="module-tag tag-core">Core</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/02-plan-mode.md" class="module">
-                <span class="module-num">02</span>
-                <span class="module-title">Plan Mode — How to Get 1-Shot Implementations</span>
-                <span class="module-tag tag-core">Core</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/03-verification.md" class="module">
-                <span class="module-num">03</span>
-                <span class="module-title">Verification — Feedback Loops That 2-3x Quality</span>
-                <span class="module-tag tag-core">Core</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/04-claude-md.md" class="module">
-                <span class="module-num">04</span>
-                <span class="module-title">CLAUDE.md — The Compounding Engineering Flywheel</span>
-                <span class="module-tag tag-core">Core</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/05-parallel-sessions.md" class="module">
-                <span class="module-num">05</span>
-                <span class="module-title">Parallel Sessions — Running 10-15 Claudes at Once</span>
-                <span class="module-tag tag-workflow">Workflow</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/06-git-worktrees.md" class="module">
-                <span class="module-num">06</span>
-                <span class="module-title">Git Worktrees — Parallel Isolated Development</span>
-                <span class="module-tag tag-workflow">Workflow</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/07-custom-agents.md" class="module">
-                <span class="module-num">07</span>
-                <span class="module-title">Custom Agents — Building Your Agent Team</span>
-                <span class="module-tag tag-advanced">Advanced</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/08-custom-commands.md" class="module">
-                <span class="module-num">08</span>
-                <span class="module-title">Custom Commands — Slash Commands That Automate Workflows</span>
-                <span class="module-tag tag-advanced">Advanced</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/09-hooks.md" class="module">
-                <span class="module-num">09</span>
-                <span class="module-title">Hooks — Deterministic Logic in Agent Workflows</span>
-                <span class="module-tag tag-advanced">Advanced</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/10-permissions-security.md" class="module">
-                <span class="module-num">10</span>
-                <span class="module-title">Permissions & Security — Pre-Allow Patterns and Sandboxing</span>
-                <span class="module-tag tag-advanced">Advanced</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/11-mcp-integrations.md" class="module">
-                <span class="module-num">11</span>
-                <span class="module-title">MCP Integrations — Slack, BigQuery, Sentry, and More</span>
-                <span class="module-tag tag-advanced">Advanced</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/12-prompting-techniques.md" class="module">
-                <span class="module-num">12</span>
-                <span class="module-title">Prompting Techniques — Getting Better Output</span>
-                <span class="module-tag tag-workflow">Workflow</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/13-code-review.md" class="module">
-                <span class="module-num">13</span>
-                <span class="module-title">Code Review — Multi-Agent Review Automation</span>
-                <span class="module-tag tag-advanced">Advanced</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/14-long-running-tasks.md" class="module">
-                <span class="module-num">14</span>
-                <span class="module-title">Long-Running & Scheduled Tasks</span>
-                <span class="module-tag tag-advanced">Advanced</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/15-mobile-cross-device.md" class="module">
-                <span class="module-num">15</span>
-                <span class="module-title">Mobile & Cross-Device — Code From Anywhere</span>
-                <span class="module-tag tag-workflow">Workflow</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/16-team-patterns.md" class="module">
-                <span class="module-num">16</span>
-                <span class="module-title">Team Patterns — Scaling Across Your Org</span>
-                <span class="module-tag tag-team">Team</span>
-            </a>
-            <a href="https://github.com/jbellsolutions/boris-cherny-claude-code/blob/course-creation/course/17-terminal-environment.md" class="module">
-                <span class="module-num">17</span>
-                <span class="module-title">Terminal & Environment — Ghostty, Statusline, Voice</span>
-                <span class="module-tag tag-workflow">Workflow</span>
-            </a>
-        </div>
-    </section>
+          <!-- Quote -->
+          <div class="quote-panel reveal">
+            <blockquote>
+              &ldquo;Give Claude a way to verify its work. If Claude has that feedback loop,
+              it will 2-3x the quality of the final result.&rdquo;
+            </blockquote>
+            <cite>&mdash; Boris Cherny, creator of Claude Code</cite>
+          </div>
 
-    <section id="setup">
-        <h2 class="section-title">The Setup</h2>
-        <p class="section-subtitle">Drop-in configuration — agents, commands, hooks, and permissions ready to go.</p>
+          <!-- Curriculum -->
+          <section class="curriculum reveal" id="curriculum">
+            <div class="section-header">
+              <p class="section-kicker">Full Curriculum</p>
+              <h2>17 modules from the person who built Claude Code.</h2>
+              <p>
+                Each module includes the key insight, a detailed explanation, and a checklist
+                of what you should now understand. Check items off as you go.
+              </p>
+            </div>
+            <div class="module-stack" id="module-grid"></div>
+          </section>
 
-        <div class="setup-grid">
-            <div class="setup-card">
-                <h3>Agents</h3>
+          <!-- Setup -->
+          <section class="setup-section reveal" id="setup">
+            <div class="section-header">
+              <p class="section-kicker">Drop-In Setup</p>
+              <h2>Install Boris's configuration into any project.</h2>
+              <p>
+                The setup includes agents, commands, hooks, permissions, and a CLAUDE.md
+                template — all ready to use. Run one command and the full setup is in your project.
+              </p>
+            </div>
+
+            <div class="setup-grid">
+              <div class="setup-card">
+                <h3>5 Custom Agents</h3>
                 <ul>
-                    <li>code-reviewer — Multi-agent PR review</li>
-                    <li>build-validator — Typecheck, lint, test, build</li>
-                    <li>code-simplifier — Post-implementation cleanup</li>
-                    <li>verify-app — E2E verification</li>
-                    <li>worktree-worker — Isolated parallel worker</li>
+                  <li>code-reviewer — Multi-agent PR review</li>
+                  <li>build-validator — Typecheck, lint, test, build</li>
+                  <li>code-simplifier — Post-implementation cleanup</li>
+                  <li>verify-app — E2E verification</li>
+                  <li>worktree-worker — Isolated parallel worker</li>
                 </ul>
-            </div>
-            <div class="setup-card">
-                <h3>Commands</h3>
+              </div>
+              <div class="setup-card">
+                <h3>4 Slash Commands</h3>
                 <ul>
-                    <li>/commit-push-pr — One-command ship</li>
-                    <li>/babysit — Auto-address PR reviews</li>
-                    <li>/feature-dev — Planning-first workflow</li>
-                    <li>/techdebt — Find and fix duplication</li>
+                  <li>/commit-push-pr — One-command ship</li>
+                  <li>/babysit — Auto-address PR reviews</li>
+                  <li>/feature-dev — Planning-first workflow</li>
+                  <li>/techdebt — Find and fix duplication</li>
                 </ul>
-            </div>
-            <div class="setup-card">
-                <h3>Hooks</h3>
+              </div>
+              <div class="setup-card">
+                <h3>Hooks & Permissions</h3>
                 <ul>
-                    <li>PostToolUse — Auto-format on every edit</li>
-                    <li>Pre-configured Slack MCP server</li>
-                    <li>Pre-allowed safe permissions</li>
+                  <li>PostToolUse auto-format on every edit</li>
+                  <li>Pre-allowed safe commands (test, lint, build)</li>
+                  <li>Slack MCP server pre-configured</li>
+                  <li>Path-scoped edit permissions</li>
                 </ul>
-            </div>
-            <div class="setup-card">
+              </div>
+              <div class="setup-card">
                 <h3>CLAUDE.md Template</h3>
                 <ul>
-                    <li>Development workflow steps</li>
-                    <li>Core principles baked in</li>
-                    <li>Corrections log ready to use</li>
-                    <li>Customizable for any project</li>
+                  <li>Development workflow steps baked in</li>
+                  <li>Core principles as instructions</li>
+                  <li>Corrections log ready to use</li>
+                  <li>Customizable for any project or team</li>
                 </ul>
+              </div>
             </div>
+
+            <div class="code-block">
+              <span class="comment"># Clone the repo</span><br>
+              <span class="cmd">git clone https://github.com/jbellsolutions/boris-cherny-claude-code.git</span><br><br>
+              <span class="comment"># Install into your project</span><br>
+              <span class="cmd">cd boris-cherny-claude-code && ./setup/install.sh /path/to/your/project</span><br><br>
+              <span class="comment"># Or install globally</span><br>
+              <span class="cmd">./setup/install.sh --global</span><br><br>
+              <span class="comment"># Open Claude Code — everything is ready</span><br>
+              <span class="cmd">claude</span>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-links">
+          <a href="https://github.com/jbellsolutions/boris-cherny-claude-code">GitHub Repo</a>
+          <a href="https://howborisusesclaudecode.com/">howborisusesclaudecode.com</a>
+          <a href="https://x.com/bcherny">Boris Cherny on X</a>
+          <a href="https://every.to/podcast/how-to-use-claude-code-like-the-people-who-built-it">Every.to Podcast</a>
         </div>
-
-        <div class="code-block">
-            <span class="comment"># Install into your current project</span><br>
-            <span class="cmd">git clone https://github.com/jbellsolutions/boris-cherny-claude-code.git</span><br>
-            <span class="cmd">cd boris-cherny-claude-code && ./setup/install.sh /path/to/your/project</span><br><br>
-            <span class="comment"># Or install globally</span><br>
-            <span class="cmd">./setup/install.sh --global</span><br><br>
-            <span class="comment"># Then open Claude Code and you're ready</span><br>
-            <span class="cmd">claude</span>
-        </div>
-    </section>
-
-    <section>
-        <h2 class="section-title">Key Workflows</h2>
-        <p class="section-subtitle">How Boris actually uses Claude Code day-to-day.</p>
-
-        <div class="principles">
-            <div class="principle">
-                <div class="principle-num" style="background: var(--green);">P</div>
-                <h3>Parallel Sessions</h3>
-                <p>10-15 sessions simultaneously. 5 terminal tabs + 5-10 web sessions + phone. System notifications for status. Color-coded tabs. Named sessions for tracking.</p>
-            </div>
-            <div class="principle">
-                <div class="principle-num" style="background: var(--purple);">W</div>
-                <h3>Git Worktrees</h3>
-                <p>Each session gets its own worktree — isolated branches that don't clobber each other. <code>claude -w my-feature</code> creates a worktree and starts a session.</p>
-            </div>
-            <div class="principle">
-                <div class="principle-num" style="background: var(--orange);">R</div>
-                <h3>Multi-Agent Code Review</h3>
-                <p>5 subagents check logic, security, performance, style, edge cases in parallel. Then 5 more challenge the findings. Only real bugs with file:line survive.</p>
-            </div>
-            <div class="principle">
-                <div class="principle-num" style="background: var(--red);">L</div>
-                <h3>Loop & Schedule</h3>
-                <p><code>/loop 5m /babysit</code> auto-addresses PR reviews. <code>/schedule daily</code> runs cloud jobs that survive laptop closure. Replace cron with Claude.</p>
-            </div>
-            <div class="principle">
-                <div class="principle-num" style="background: var(--accent);">M</div>
-                <h3>MCP Integrations</h3>
-                <p>Slack bug thread → paste → "fix". BigQuery queries in natural language. Sentry errors pulled automatically. Zero context switching.</p>
-            </div>
-            <div class="principle">
-                <div class="principle-num" style="background: var(--green);">T</div>
-                <h3>Teleport & Mobile</h3>
-                <p>Start in terminal → teleport to web → continue on phone → teleport back. Code from anywhere. "When I'm not coding, I'm dispatching."</p>
-            </div>
-        </div>
-    </section>
-
-</div>
-
-<footer>
-    <div class="footer-links">
-        <a href="https://github.com/jbellsolutions/boris-cherny-claude-code">GitHub</a>
-        <a href="https://howborisusesclaudecode.com/">howborisusesclaudecode.com</a>
-        <a href="https://x.com/bcherny">Boris Cherny on X</a>
-        <a href="https://every.to/podcast/how-to-use-claude-code-like-the-people-who-built-it">Every.to Podcast</a>
+        <p>Based on Boris Cherny's public tips, talks, and posts. Not affiliated with Anthropic.</p>
+      </footer>
     </div>
-    <p>Based on Boris Cherny's public tips and talks. Not affiliated with Anthropic.</p>
-</footer>
-
-</body>
+  </body>
 </html>
